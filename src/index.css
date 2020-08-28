@@ -21,6 +21,23 @@ code {
     monospace;
 }
 
+.fakeLink {
+    background: none!important;
+    border: none;
+    font-family: arial, sans-serif;
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.fakeLink:hover {
+    text-decoration: underline;
+}
+
+.nav-item {
+    list-style-type: none;
+}
+
 /* General button style */
 .btn {
 	border: none;
