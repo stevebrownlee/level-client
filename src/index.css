@@ -70,8 +70,6 @@ code {
 
 /* Pseudo elements for icons */
 .btn:before {
-	font-family: 'FontAwesome';
-	speak: none;
 	font-style: normal;
 	font-weight: normal;
 	font-variant: normal;
@@ -194,5 +192,5 @@ code {
 /* Icons */
 
 .icon-send:before {
-	content: "📧";
+	content: "🔓";
 }
