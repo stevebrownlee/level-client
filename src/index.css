@@ -22,16 +22,16 @@ code {
 }
 
 .fakeLink {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
     background: none!important;
     border: none;
-    font-family: arial, sans-serif;
-    color: #007bff;
-    text-decoration: none;
     cursor: pointer;
 }
 
 .fakeLink:hover {
-    text-decoration: underline;
+    font-weight: bold;
 }
 
 .nav-item {
