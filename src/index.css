@@ -46,9 +46,10 @@ code {
 	color: inherit;
 	background: none;
 	cursor: pointer;
-	padding: 25px 80px;
+    padding: 0.35rem 1.5rem;
+    box-shadow: 0.25rem 0.25rem 0.7rem #90969b;
 	display: inline-block;
-	margin: 15px 30px;
+	margin: 0.5rem 0.75rem;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	font-weight: 700;
@@ -187,6 +188,10 @@ code {
 	line-height: 3;
 	font-size: 140%;
 	width: 60px;
+}
+
+.btn--small {
+
 }
 
 /* Icons */
