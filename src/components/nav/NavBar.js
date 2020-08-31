@@ -1,15 +1,20 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import "./NavBar.css"
+import Logo from "./levelup.png"
 
 export const NavBar = (props) => {
     return (
         <ul className="navbar">
             <li className="navbar__item">
+
+                <img src={Logo} />
+            </li>
+            <li className="navbar__item">
                 <Link className="navbar__link" to="/">Games</Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/profile">Events</Link>
+                <Link className="navbar__link" to="/events">Events</Link>
             </li>
             <li className="navbar__item">
                 <Link className="navbar__link" to="/profile">Profile</Link>

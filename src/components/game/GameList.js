@@ -1,29 +1,33 @@
 import React, { useContext, useEffect } from "react"
-import { ProfileContext } from "../auth/AuthProvider.js"
+import { EventContext } from "../event/EventProvider.js"
+import { HumanDate } from "../utils/HumanDate.js"
 import { GameContext } from "./GameProvider.js"
 import "./Games.css"
 
 export const GameList = () => {
     const { games, getGames } = useContext(GameContext)
-    const { profile, getProfile } = useContext(ProfileContext)
+    const { events, getEvents } = useContext(EventContext)
 
     useEffect(() => {
-       getProfile().then(getGames)
+        getEvents().then(getGames)
     }, [])
 
     return (
         <article className="games">
             {
                 games.map(game => {
-                    const attending = profile.events.some(evt => evt.game.id === game.id)
-                    return <section className="game">
-                        <div className="game__title">{ game.title } by { game.maker }</div>
-                        <div className="game__players">{ game.number_of_players } players needed</div>
-                        <div className="game__skillLevel">Skill level is { game.skill_level }</div>
+                    const gameEvents = events.filter(e => e.game.id === game.id)
+                    return <section key={`game--${game.id}`} className="game">
+                        <div className="game__title">{game.title} by {game.maker}</div>
+                        <div className="game__players">{game.number_of_players} players needed</div>
+                        <div className="game__skillLevel">Skill level is {game.skill_level}</div>
+                        <h4>Upcoming Events</h4>
                         {
-                            attending
-                                ? <button className="btn btn-3">Leave</button>
-                                : <button className="btn btn-2">Join</button>
+                            events.map(event => {
+                                return <div key={`gameEvent--${event.id}`}>
+                                    <HumanDate date={event.date} /> @ {event.time}
+                                </div>
+                            })
                         }
                     </section>
                 })
