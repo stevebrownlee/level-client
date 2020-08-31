@@ -14,6 +14,9 @@ export const GameList = () => {
 
     return (
         <article className="games">
+            <header>
+                <h1>Level Up Games</h1>
+            </header>
             {
                 games.map(game => {
                     const gameEvents = events.filter(e => e.game.id === game.id)

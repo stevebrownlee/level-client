@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from "react"
+import { HumanDate } from "../utils/HumanDate.js"
 import { ProfileContext } from "./AuthProvider.js"
 import "./Profile.css"
 
@@ -12,6 +13,9 @@ export const Profile = () => {
 
     return (
         <article className="profile">
+            <header>
+                <h1>Your Profile</h1>
+            </header>
             <section className="profile__info">
                 <header className="profile__header">
                     <h3>Your Info</h3>
@@ -32,16 +36,9 @@ export const Profile = () => {
                                 <div className="registration__game">{event.game.title}</div>
                                 <div>{event.description}</div>
                                 <div>
-                                    {
-                                        new Date(event.date).toLocaleDateString("en-US",
-                                            {
-                                                weekday: 'long',
-                                                year: 'numeric',
-                                                month: 'long',
-                                                day: 'numeric'
-                                            })
-                                    } @ {event.time}
+                                    <HumanDate date={event.date} /> @ {event.time}
                                 </div>
+                                <button className="btn btn-3">Leave</button>
                             </div>
                         })
                     }

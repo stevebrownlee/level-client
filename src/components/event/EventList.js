@@ -14,6 +14,9 @@ export const EventList = () => {
 
     return (
         <article className="events">
+            <header>
+                <h1>Level Up Game Events</h1>
+            </header>
             {
                 events.map(event => {
                     const attending = profile.events.some(evt => evt.id === event.id)
