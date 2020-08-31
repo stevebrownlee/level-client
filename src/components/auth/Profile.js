@@ -20,10 +20,11 @@ export const Profile = () => {
                 <header className="profile__header">
                     <h3>Your Info</h3>
                 </header>
-                <div className="profile__name">Welcome: {profile.gamer && profile.gamer.user.first_name} {profile.gamer && profile.gamer.user.last_name}
+                <div className="profile__name">
+                    Welcome: {profile.gamer && profile.gamer.user.first_name} {profile.gamer && profile.gamer.user.last_name}
                 </div>
-                <div className="profile__username">Username: {profile.gamer ? profile.gamer.user.username : ""}</div>
-                <div className="profile__bio">About you: {profile.gamer ? profile.gamer.bio : ""}</div>
+                <div className="profile__username">Username: {profile.gamer && profile.gamer.user.username}</div>
+                <div className="profile__bio">About you: {profile.gamer && profile.gamer.bio}</div>
             </section>
             <section className="profile__registrations">
                 <header className="registrations__header">

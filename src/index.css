@@ -83,7 +83,7 @@ code {
 
 /* Icon separator */
 .btn-sep {
-	padding: 25px 60px 25px 120px;
+    padding: 0.35rem 1.5rem 0.25rem 5rem;
 }
 
 .btn-sep:before {
@@ -135,7 +135,7 @@ code {
 	height: 100%;
 	left: 0;
 	top: 0;
-	line-height: 3;
+	line-height: 1.7;
 	font-size: 140%;
 	width: 60px;
 }
@@ -190,12 +190,13 @@ code {
 	width: 60px;
 }
 
-.btn--small {
-
-}
-
 /* Icons */
+
+.icon-create:before {
+	content: "🌟";
+}
 
 .icon-send:before {
 	content: "🔓";
 }
+
