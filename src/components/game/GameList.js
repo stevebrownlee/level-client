@@ -31,7 +31,8 @@ export const GameList = (props) => {
                         <div className="game__skillLevel">Skill level is {game.skill_level}</div>
                         <h4>Upcoming Events</h4>
                         {
-                            events.map(event => {
+                            events.filter(event => event.game.id === game.id)
+                                .map(event => {
                                 return <div key={`gameEvent--${event.id}`}>
                                     <HumanDate date={event.date} /> @ {event.time}
                                 </div>
