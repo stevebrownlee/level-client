@@ -1,15 +1,13 @@
 import React, { useContext, useEffect } from "react"
-import { ProfileContext } from "../auth/AuthProvider.js"
 import { HumanDate } from "../utils/HumanDate.js"
 import { EventContext } from "./EventProvider.js"
 import "./Events.css"
 
 export const EventList = (props) => {
-    const { events, getEvents } = useContext(EventContext)
-    const { profile, getProfile } = useContext(ProfileContext)
+    const { events, getEvents, joinEvent, leaveEvent } = useContext(EventContext)
 
     useEffect(() => {
-        getProfile().then(getEvents)
+        getEvents()
     }, [])
 
     return (
@@ -20,11 +18,10 @@ export const EventList = (props) => {
                     onClick={() => {
                         props.history.push({ pathname: "/events/new" })
                     }}
-                >Register New Event</button>
+                >Schedule New Event</button>
             </header>
             {
                 events.map(event => {
-                    const attending = profile.events.some(evt => evt.id === event.id)
                     return <section key={event.id} className="registration">
                         <div className="registration__game">{event.game.title}</div>
                         <div>{event.description}</div>
@@ -32,9 +29,13 @@ export const EventList = (props) => {
                             <HumanDate date={event.date} /> @ {event.time}
                         </div>
                         {
-                            attending
-                                ? <button className="btn btn-3">Leave</button>
-                                : <button className="btn btn-2">Join</button>
+                            event.joined
+                                ? <button className="btn btn-3"
+                                    onClick={e => leaveEvent(event.id)}
+                                    >Leave</button>
+                                : <button className="btn btn-2"
+                                    onClick={e => joinEvent(event.id)}
+                                    >Join</button>
                         }
                     </section>
                 })
