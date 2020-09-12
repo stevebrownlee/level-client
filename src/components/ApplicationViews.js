@@ -15,11 +15,12 @@ export const ApplicationViews = () => {
             margin: "5rem 2rem",
             lineHeight: "1.75rem"
         }}>
-            <Route exact path="/games/new">
-                <GameProvider>
+            <GameProvider>
+                <Route exact path="/games/new">
                     <GameForm />
-                </GameProvider>
-            </Route>
+                </Route>
+                <Route exact path="/games/:gameId(\d+)/edit" render={props => <GameForm {...props} />} />
+            </GameProvider>
 
             <GameProvider>
                 <EventProvider>
@@ -28,17 +29,18 @@ export const ApplicationViews = () => {
             </GameProvider>
 
             <ProfileProvider>
-                <GameProvider>
-                    <EventProvider>
-                        <Route exact path="/" render={props => <GameList {...props} />} />
-
-                        <Route exact path="/profile">
-                            <Profile />
-                        </Route>
-                        <Route exact path="/events" render={p => <EventList {...p} />} />
-                    </EventProvider>
-                </GameProvider>
+                <EventProvider>
+                    <Route exact path="/profile" render={p => <Profile {...p} />} />
+                </EventProvider>
             </ProfileProvider>
+
+            <GameProvider>
+                <EventProvider>
+                    <Route exact path="/" render={props => <GameList {...props} />} />
+
+                    <Route exact path="/events" render={p => <EventList {...p} />} />
+                </EventProvider>
+            </GameProvider>
         </main>
     </>
 }

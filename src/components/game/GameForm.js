@@ -3,7 +3,7 @@ import { GameContext } from "./GameProvider.js"
 
 
 export const GameForm = props => {
-    const { createGame, getGameTypes, gameTypes } = useContext(GameContext)
+    const { createGame, getGameTypes, gameTypes, getGame } = useContext(GameContext)
     const [currentGame, setCurrentGame] = useState({
         skillLevel: 1,
         numberOfPlayers: 0,
@@ -15,6 +15,18 @@ export const GameForm = props => {
     useEffect(() => {
         getGameTypes()
     }, [])
+
+    useEffect(() => {
+        getGame(props.match.params.gameId).then(game => {
+            setCurrentGame({
+                skillLevel: game.skill_level,
+                numberOfPlayers: game.number_of_players,
+                title: game.title,
+                gameTypeId: game.gametype.id,
+                maker: game.maker
+            })
+        })
+    }, [props.match.params.gameId])
 
     const handleControlledInputChange = (event) => {
         const newGameState = Object.assign({}, currentGame)
