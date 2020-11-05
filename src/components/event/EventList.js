@@ -24,6 +24,7 @@ export const EventList = (props) => {
                 events.map(event => {
                     return <section key={event.id} className="registration">
                         <div className="registration__game">{event.game.title}</div>
+                        <div>Organized by: {event.organizer.full_name}</div>
                         <div>{event.description}</div>
                         <div>
                             <HumanDate date={event.date} /> @ {event.time}

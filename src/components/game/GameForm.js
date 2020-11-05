@@ -3,7 +3,7 @@ import { GameContext } from "./GameProvider.js"
 
 
 export const GameForm = props => {
-    const { createGame, getGameTypes, gameTypes, getGame } = useContext(GameContext)
+    const { createGame, getGameTypes, gameTypes, getGame, editGame } = useContext(GameContext)
     const [currentGame, setCurrentGame] = useState({
         skillLevel: 1,
         numberOfPlayers: 0,
@@ -17,15 +17,17 @@ export const GameForm = props => {
     }, [])
 
     useEffect(() => {
-        getGame(props.match.params.gameId).then(game => {
-            setCurrentGame({
-                skillLevel: game.skill_level,
-                numberOfPlayers: game.number_of_players,
-                title: game.title,
-                gameTypeId: game.gametype.id,
-                maker: game.maker
+        if ("gameId" in props.match.params) {
+            getGame(props.match.params.gameId).then(game => {
+                setCurrentGame({
+                    skillLevel: game.skill_level,
+                    numberOfPlayers: game.number_of_players,
+                    title: game.title,
+                    gameTypeId: game.gametype.id,
+                    maker: game.maker
+                })
             })
-        })
+        }
     }, [props.match.params.gameId])
 
     const handleControlledInputChange = (event) => {
@@ -87,18 +89,36 @@ export const GameForm = props => {
                     </select>
                 </div>
             </fieldset>
-            <button type="submit"
-                onClick={evt => {
-                    evt.preventDefault()
-                    createGame({
-                        maker: currentGame.maker,
-                        title: currentGame.title,
-                        numberOfPlayers: parseInt(currentGame.numberOfPlayers),
-                        skillLevel: parseInt(currentGame.skillLevel),
-                        gameTypeId: parseInt(currentGame.gameTypeId)
-                    })
-                }}
-                className="btn btn-primary">Create</button>
+            {
+                ("gameId" in props.match.params)
+                    ? <button
+                        onClick={evt => {
+                            evt.preventDefault()
+                            editGame({
+                                id: props.match.params.gameId,
+                                maker: currentGame.maker,
+                                title: currentGame.title,
+                                numberOfPlayers: parseInt(currentGame.numberOfPlayers),
+                                skillLevel: parseInt(currentGame.skillLevel),
+                                gameTypeId: parseInt(currentGame.gameTypeId)
+                            })
+                                .then(() => props.history.push("/games"))
+                        }}
+                        className="btn btn-primary">Edit</button>
+                    : <button type="submit"
+                        onClick={evt => {
+                            evt.preventDefault()
+                            createGame({
+                                maker: currentGame.maker,
+                                title: currentGame.title,
+                                numberOfPlayers: parseInt(currentGame.numberOfPlayers),
+                                skillLevel: parseInt(currentGame.skillLevel),
+                                gameTypeId: parseInt(currentGame.gameTypeId)
+                            })
+                        }}
+                        className="btn btn-primary">Create</button>
+            }
+
         </form>
     )
 }

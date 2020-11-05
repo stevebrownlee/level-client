@@ -38,6 +38,11 @@ export const GameList = (props) => {
                                 </div>
                             })
                         }
+                        <div className="game__edit">
+                            <button className="btn btn-3"
+                                    onClick={e => props.history.push(`/games/${game.id}/edit`)}
+                                    >Edit</button>
+                        </div>
                     </section>
                 })
             }

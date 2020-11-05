@@ -75,9 +75,6 @@ export const EventForm = props => {
                 onClick={evt => {
                     evt.preventDefault()
 
-                    const formattedDate = new Date(currentEvent.date)
-                        .toLocaleDateString("en-US")
-
                     createEvent({
                         gameId: currentEvent.gameId,
                         description: currentEvent.description,
