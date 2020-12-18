@@ -1,11 +1,13 @@
 import React, { useEffect, useContext } from "react"
+import { useHistory } from "react-router-dom"
 import { EventContext } from "../event/EventProvider.js"
 import { HumanDate } from "../utils/HumanDate.js"
 import { ProfileContext } from "./AuthProvider.js"
 import "./Profile.css"
 
 
-export const Profile = (props) => {
+export const Profile = () => {
+    const history = useHistory()
     const { profile, getProfile } = useContext(ProfileContext)
     const { leaveEvent } = useContext(EventContext)
 
@@ -61,7 +63,7 @@ export const Profile = (props) => {
                                 <div className="game__players">{game.number_of_players} players needed</div>
                                 <div className="game__skillLevel">Skill level is {game.skill_level}</div>
                                 <button className="btn btn-4"
-                                    onClick={() => props.history.push(`/games/${game.id}/edit`)}
+                                    onClick={() => history.push(`/games/${game.id}/edit`)}
                                 >Edit</button>
                             </section>
                         })

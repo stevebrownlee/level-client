@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from "react"
+import { useHistory } from "react-router-dom"
 import { EventContext } from "../event/EventProvider.js"
 import { HumanDate } from "../utils/HumanDate.js"
 import { GameContext } from "./GameProvider.js"
 import "./Games.css"
 
-export const GameList = (props) => {
+export const GameList = () => {
+    const history = useHistory()
     const { games, getGames } = useContext(GameContext)
     const { events, getEvents } = useContext(EventContext)
 
@@ -18,7 +20,7 @@ export const GameList = (props) => {
                 <h1>Level Up Games</h1>
                 <button className="btn btn-2 btn-sep icon-create"
                     onClick={() => {
-                        props.history.push({ pathname: "/games/new" })
+                        history.push({ pathname: "/games/new" })
                     }}
                 >Register New Game</button>
             </header>
@@ -40,7 +42,7 @@ export const GameList = (props) => {
                         }
                         <div className="game__edit">
                             <button className="btn btn-3"
-                                    onClick={e => props.history.push(`/games/${game.id}/edit`)}
+                                    onClick={e => history.push(`/games/${game.id}/edit`)}
                                     >Edit</button>
                         </div>
                     </section>
