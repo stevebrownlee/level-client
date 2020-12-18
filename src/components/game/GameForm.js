@@ -1,9 +1,18 @@
 import React, { useContext, useState, useEffect } from "react"
 import { GameContext } from "./GameProvider.js"
+import { useParams, useHistory } from 'react-router-dom'
 
 
-export const GameForm = props => {
-    const { createGame, getGameTypes, gameTypes, getGame, editGame } = useContext(GameContext)
+export const GameForm = () => {
+    const history = useHistory()
+    const { gameId = null } = useParams()
+
+    const {
+        createGame, getGameTypes, gameTypes,
+        getGame, editGame
+    } = useContext(GameContext)
+
+    const [title, setTitle] = useState("Register new game")
     const [currentGame, setCurrentGame] = useState({
         skillLevel: 1,
         numberOfPlayers: 0,
@@ -17,8 +26,9 @@ export const GameForm = props => {
     }, [])
 
     useEffect(() => {
-        if ("gameId" in props.match.params) {
-            getGame(props.match.params.gameId).then(game => {
+        if (gameId !== null) {
+            getGame(gameId).then(game => {
+                setTitle("Update Game Details")
                 setCurrentGame({
                     skillLevel: game.skill_level,
                     numberOfPlayers: game.number_of_players,
@@ -28,23 +38,23 @@ export const GameForm = props => {
                 })
             })
         }
-    }, [props.match.params.gameId])
+    }, [gameId])
 
-    const handleControlledInputChange = (event) => {
-        const newGameState = Object.assign({}, currentGame)
+    const changeGameState = (event) => {
+        const newGameState = { ...currentGame }
         newGameState[event.target.name] = event.target.value
         setCurrentGame(newGameState)
     }
 
     return (
         <form className="gameForm">
-            <h2 className="gameForm__title">Register New Game</h2>
+            <h2 className="gameForm__title">{title}</h2>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="title">Title: </label>
                     <input type="text" name="title" required autoFocus className="form-control"
                         value={currentGame.title}
-                        onChange={handleControlledInputChange}
+                        onChange={changeGameState}
                     />
                 </div>
             </fieldset>
@@ -53,7 +63,7 @@ export const GameForm = props => {
                     <label htmlFor="maker">Maker/Distributor: </label>
                     <input type="text" name="maker" required autoFocus className="form-control"
                         value={currentGame.maker}
-                        onChange={handleControlledInputChange}
+                        onChange={changeGameState}
                     />
                 </div>
             </fieldset>
@@ -62,7 +72,7 @@ export const GameForm = props => {
                     <label htmlFor="numberOfPlayers">Number of Players: </label>
                     <input type="number" name="numberOfPlayers" required autoFocus className="form-control"
                         value={currentGame.numberOfPlayers}
-                        onChange={handleControlledInputChange}
+                        onChange={changeGameState}
                     />
                 </div>
             </fieldset>
@@ -71,7 +81,7 @@ export const GameForm = props => {
                     <label htmlFor="numberOfPlayers">Skill level (1-5): </label>
                     <input type="range" min="1" max="5" name="skillLevel"
                         value={currentGame.skillLevel}
-                        onChange={handleControlledInputChange} />
+                        onChange={changeGameState} />
                 </div>
             </fieldset>
             <fieldset>
@@ -79,7 +89,7 @@ export const GameForm = props => {
                     <label htmlFor="gameTypeId">Game Type: </label>
                     <select name="gameTypeId" className="form-control"
                         value={currentGame.gameTypeId}
-                        onChange={handleControlledInputChange}>
+                        onChange={changeGameState}>
                         <option value="0">Select a type</option>
                         {
                             gameTypes.map(type => (
@@ -90,19 +100,19 @@ export const GameForm = props => {
                 </div>
             </fieldset>
             {
-                ("gameId" in props.match.params)
+                (gameId !== null)
                     ? <button
                         onClick={evt => {
                             evt.preventDefault()
                             editGame({
-                                id: props.match.params.gameId,
+                                id: gameId,
                                 maker: currentGame.maker,
                                 title: currentGame.title,
                                 numberOfPlayers: parseInt(currentGame.numberOfPlayers),
                                 skillLevel: parseInt(currentGame.skillLevel),
                                 gameTypeId: parseInt(currentGame.gameTypeId)
                             })
-                                .then(() => props.history.push("/games"))
+                                .then(() => history.push("/games"))
                         }}
                         className="btn btn-primary">Edit</button>
                     : <button type="submit"
@@ -115,6 +125,7 @@ export const GameForm = props => {
                                 skillLevel: parseInt(currentGame.skillLevel),
                                 gameTypeId: parseInt(currentGame.gameTypeId)
                             })
+                                .then(() => history.push("/games"))
                         }}
                         className="btn btn-primary">Create</button>
             }

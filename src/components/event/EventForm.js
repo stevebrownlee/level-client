@@ -1,11 +1,14 @@
 import React, { useContext, useState, useEffect } from "react"
 import { GameContext } from "../game/GameProvider";
 import { EventContext } from "./EventProvider";
+import { useHistory } from 'react-router-dom'
 
+export const EventForm = () => {
+    const history = useHistory()
 
-export const EventForm = props => {
     const { createEvent } = useContext(EventContext)
     const { games, getGames } = useContext(GameContext)
+
     const [currentEvent, setEvent] = useState({
         gameId: 0,
         description: "",
@@ -17,8 +20,8 @@ export const EventForm = props => {
         getGames()
     }, [])
 
-    const handleControlledInputChange = (event) => {
-        const newEventState = Object.assign({}, currentEvent)
+    const changeEventState = (event) => {
+        const newEventState = { ...currentEvent }
         newEventState[event.target.name] = event.target.value
         setEvent(newEventState)
     }
@@ -31,7 +34,7 @@ export const EventForm = props => {
                     <label htmlFor="gameId">Game: </label>
                     <select name="gameId" className="form-control"
                         value={currentEvent.gameId}
-                        onChange={handleControlledInputChange}>
+                        onChange={changeEventState}>
                         <option value="0">Select a game...</option>
                         {
                             games.map(game => (
@@ -46,7 +49,7 @@ export const EventForm = props => {
                     <label htmlFor="description">Description: </label>
                     <textarea type="text" name="description" required autoFocus className="form-control"
                         value={currentEvent.description}
-                        onChange={handleControlledInputChange}
+                        onChange={changeEventState}
                         style={{
                             height: "5rem"
                         }}
@@ -58,7 +61,7 @@ export const EventForm = props => {
                     <label htmlFor="date">Date: </label>
                     <input type="date" name="date" required autoFocus className="form-control"
                         value={currentEvent.date}
-                        onChange={handleControlledInputChange}
+                        onChange={changeEventState}
                     />
                 </div>
             </fieldset>
@@ -67,7 +70,7 @@ export const EventForm = props => {
                     <label htmlFor="numberOfPlayers">Time: </label>
                     <input type="time" name="time" required autoFocus className="form-control"
                         value={currentEvent.time}
-                        onChange={handleControlledInputChange}
+                        onChange={changeEventState}
                     />
                 </div>
             </fieldset>
@@ -81,7 +84,7 @@ export const EventForm = props => {
                         date: currentEvent.date,
                         time: currentEvent.time
                     })
-                        .then(() => props.history.push({ pathname: "/events" }))
+                        .then(() => history.push({ pathname: "/events" }))
                 }}
                 className="btn btn-primary">Create</button>
         </form>
