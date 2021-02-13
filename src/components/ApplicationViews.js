@@ -1,10 +1,11 @@
+
 import React from "react"
 import { Route } from "react-router-dom"
 import { ProfileProvider } from "./auth/AuthProvider.js"
 import { Profile } from "./auth/Profile.js"
+import { EventForm } from "./event/EventForm"
 import { EventList } from "./event/EventList.js"
 import { EventProvider } from "./event/EventProvider.js"
-import { EventForm } from "./event/EventForm";
 import { GameForm } from "./game/GameForm.js"
 import { GameList } from "./game/GameList.js"
 import { GameProvider } from "./game/GameProvider.js"
