@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import Settings from "../Settings.js"
 
 export const ProfileContext = React.createContext()
 
@@ -6,7 +7,7 @@ export const ProfileProvider = (props) => {
     const [profile, setProfile] = useState({events:[]})
 
     const getProfile = () => {
-        return fetch("http://localhost:8000/profile", {
+        return fetch(`${Settings.apiHost}/profile`, {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("lu_token")}`
             }

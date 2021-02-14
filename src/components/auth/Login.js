@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import Settings from "../Settings.js"
 import "./Auth.css"
-
 
 export const Login = props => {
     const email = React.createRef()
@@ -11,7 +11,7 @@ export const Login = props => {
     const handleLogin = (e) => {
         e.preventDefault()
 
-        return fetch("http://127.0.0.1:8000/login", {
+        return fetch(`${Settings.apiHost}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
