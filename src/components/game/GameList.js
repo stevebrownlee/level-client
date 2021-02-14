@@ -40,11 +40,16 @@ export const GameList = () => {
                                 </div>
                             })
                         }
-                        <div className="game__edit">
-                            <button className="btn btn-3"
-                                    onClick={e => history.push(`/games/${game.id}/edit`)}
-                                    >Edit</button>
-                        </div>
+                        {
+                            game.owner
+                                ? <div className="game__edit">
+                                    <button className="btn btn-3"
+                                            onClick={e => history.push(`/games/${game.id}/edit`)}
+                                            >Edit</button>
+                                  </div>
+                                : ""
+                        }
+
                     </section>
                 })
             }

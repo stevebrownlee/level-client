@@ -32,7 +32,7 @@ export const Profile = () => {
             </section>
             <section className="profile__registrations">
                 <header className="registrations__header">
-                    <h3>Your Events</h3>
+                    <h3>Events Attending</h3>
                 </header>
                 <div className="registrations">
                     {
@@ -43,9 +43,14 @@ export const Profile = () => {
                                 <div>
                                     <HumanDate date={event.date} /> @ {event.time}
                                 </div>
-                                <button className="btn btn-3"
-                                    onClick={() => leaveEvent(event.id).then(getProfile)}
-                                >Leave</button>
+                                {
+                                    event.owner
+                                     ? ""
+                                     : <button className="btn btn-3"
+                                            onClick={() => leaveEvent(event.id).then(getProfile)}
+                                        >Leave</button>
+                                }
+
                             </div>
                         })
                     }

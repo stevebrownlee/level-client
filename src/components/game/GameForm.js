@@ -40,11 +40,45 @@ export const GameForm = () => {
         }
     }, [gameId])
 
-    const changeGameState = (event) => {
+
+    /*
+        REFACTOR CHALLENGE START
+
+        Can you refactor this code so that all property
+        state changes can be handled with a single function
+        instead of five functions that all, largely, do
+        the same thing?
+    */
+    const changeGameTitleState = (event) => {
         const newGameState = { ...currentGame }
-        newGameState[event.target.name] = event.target.value
+        newGameState.title = event.target.value
         setCurrentGame(newGameState)
     }
+
+    const changeGameMakerState = (event) => {
+        const newGameState = { ...currentGame }
+        newGameState.maker = event.target.value
+        setCurrentGame(newGameState)
+    }
+
+    const changeGamePlayersState = (event) => {
+        const newGameState = { ...currentGame }
+        newGameState.numberOfPlayers = parseInt(event.target.value)
+        setCurrentGame(newGameState)
+    }
+
+    const changeGameSkillLevelState = (event) => {
+        const newGameState = { ...currentGame }
+        newGameState.skillLevel = parseInt(event.target.value)
+        setCurrentGame(newGameState)
+    }
+
+    const changeGameTypeState = (event) => {
+        const newGameState = { ...currentGame }
+        newGameState.gameTypeId = parseInt(event.target.value)
+        setCurrentGame(newGameState)
+    }
+    /* REFACTOR CHALLENGE END */
 
     return (
         <form className="gameForm">
@@ -54,7 +88,7 @@ export const GameForm = () => {
                     <label htmlFor="title">Title: </label>
                     <input type="text" name="title" required autoFocus className="form-control"
                         value={currentGame.title}
-                        onChange={changeGameState}
+                        onChange={changeGameTitleState}
                     />
                 </div>
             </fieldset>
@@ -63,7 +97,7 @@ export const GameForm = () => {
                     <label htmlFor="maker">Maker/Distributor: </label>
                     <input type="text" name="maker" required autoFocus className="form-control"
                         value={currentGame.maker}
-                        onChange={changeGameState}
+                        onChange={changeGameMakerState}
                     />
                 </div>
             </fieldset>
@@ -72,16 +106,16 @@ export const GameForm = () => {
                     <label htmlFor="numberOfPlayers">Number of Players: </label>
                     <input type="number" name="numberOfPlayers" required autoFocus className="form-control"
                         value={currentGame.numberOfPlayers}
-                        onChange={changeGameState}
+                        onChange={changeGamePlayersState}
                     />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <label htmlFor="numberOfPlayers">Skill level (1-5): </label>
+                    <label htmlFor="skillLevel">Skill level (1-5): </label>
                     <input type="range" min="1" max="5" name="skillLevel"
                         value={currentGame.skillLevel}
-                        onChange={changeGameState} />
+                        onChange={changeGameSkillLevelState} />
                 </div>
             </fieldset>
             <fieldset>
@@ -89,7 +123,7 @@ export const GameForm = () => {
                     <label htmlFor="gameTypeId">Game Type: </label>
                     <select name="gameTypeId" className="form-control"
                         value={currentGame.gameTypeId}
-                        onChange={changeGameState}>
+                        onChange={changeGameTypeState}>
                         <option value="0">Select a type</option>
                         {
                             gameTypes.map(type => (
@@ -108,9 +142,9 @@ export const GameForm = () => {
                                 id: gameId,
                                 maker: currentGame.maker,
                                 title: currentGame.title,
-                                numberOfPlayers: parseInt(currentGame.numberOfPlayers),
-                                skillLevel: parseInt(currentGame.skillLevel),
-                                gameTypeId: parseInt(currentGame.gameTypeId)
+                                numberOfPlayers: currentGame.numberOfPlayers,
+                                skillLevel: currentGame.skillLevel,
+                                gameTypeId: currentGame.gameTypeId
                             })
                                 .then(() => history.push("/games"))
                         }}
@@ -121,15 +155,14 @@ export const GameForm = () => {
                             createGame({
                                 maker: currentGame.maker,
                                 title: currentGame.title,
-                                numberOfPlayers: parseInt(currentGame.numberOfPlayers),
-                                skillLevel: parseInt(currentGame.skillLevel),
-                                gameTypeId: parseInt(currentGame.gameTypeId)
+                                numberOfPlayers: currentGame.numberOfPlayers,
+                                skillLevel: currentGame.skillLevel,
+                                gameTypeId: currentGame.gameTypeId
                             })
                                 .then(() => history.push("/games"))
                         }}
                         className="btn btn-primary">Create</button>
             }
-
         </form>
     )
 }
