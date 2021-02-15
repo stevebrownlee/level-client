@@ -1,36 +1,29 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import Settings from "../Settings.js"
+import React, { useContext, useRef, useState } from "react"
+import { Link, useHistory } from "react-router-dom"
+import { AppContext } from "../ApplicationStateProvider.js"
 import "./Auth.css"
 
-export const Login = props => {
-    const email = React.createRef()
-    const password = React.createRef()
-    const invalidDialog = React.createRef()
+export const Login = () => {
+    const invalidDialog = useRef()
+    const [c, set] = useState({ username: "me@me.com", password: "me" })
+    const history = useHistory()
+    const { authenticate } = useContext(AppContext)
+
+    const cycle = e => {
+        const copy = {...c}
+        copy[e.target.name] = e.target.value
+        set(copy)
+    }
 
     const handleLogin = (e) => {
         e.preventDefault()
 
-        return fetch(`${Settings.apiHost}/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                username: email.current.value,
-                password: password.current.value
-            })
-        })
-            .then(res => res.json())
-            .then(res => {
-                if ("valid" in res && res.valid && "token" in res) {
-                    localStorage.setItem( "lu_token", res.token )
-                    localStorage.setItem( "lu_name", res.name )
-                    props.history.push("/")
-                }
-                else {
+        authenticate(c)
+            .then(success => {
+                if (!success) {
                     invalidDialog.current.showModal()
+                } else {
+                    history.push("/")
                 }
             })
     }
@@ -47,11 +40,20 @@ export const Login = props => {
                     <h2>Please sign in</h2>
                     <fieldset>
                         <label htmlFor="inputEmail"> Email address </label>
-                        <input ref={email} type="email" id="email" className="form-control" defaultValue="me@me.com" placeholder="Email address" required autoFocus />
+                        <input type="email" name="username"
+                               className="form-control"
+                               defaultValue={c.username}
+                               placeholder="Email address"
+                               required autoFocus
+                               onChange={cycle} />
                     </fieldset>
                     <fieldset>
                         <label htmlFor="inputPassword"> Password </label>
-                        <input ref={password} type="password" id="password" className="form-control" defaultValue="me" placeholder="Password" required />
+                        <input type="password" name="password"
+                               className="form-control"
+                               defaultValue={c.password}
+                               placeholder="Password" required
+                               onChange={cycle} />
                     </fieldset>
                     <fieldset style={{
                         textAlign:"center"

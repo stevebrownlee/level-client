@@ -16,6 +16,19 @@ export const EventList = () => {
         <article className="events">
             <header className="events__header">
                 <h1>Level Up Game Events</h1>
+
+                <div className="tab-bar radius">
+                    <a className="tab" href="#" data-text="Well attended">
+                        <span className="icon">👩‍👩‍👧</span>
+                    </a>
+                    <a className="tab" href="#" data-text="Coming soon">
+                        <span className="icon">⏱</span>
+                    </a>
+                    <a className="tab" href="#" data-text="Skill level">
+                        <span className="icon">🎯</span>
+                    </a>
+                </div>
+
                 <button className="btn btn-2 btn-sep icon-create"
                     onClick={() => {
                         history.push({ pathname: "/events/new" })
@@ -37,10 +50,10 @@ export const EventList = () => {
                                 : event.joined
                                     ? <button className="btn btn-3"
                                         onClick={() => leaveEvent(event.id)}
-                                        >Leave</button>
+                                    >Leave</button>
                                     : <button className="btn btn-2"
                                         onClick={() => joinEvent(event.id)}
-                                        >Join</button>
+                                    >Join</button>
                         }
                     </section>
                 })
