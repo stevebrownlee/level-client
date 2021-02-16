@@ -21,10 +21,20 @@ export const GameList = () => {
                     <h1>Level Up Games</h1>
 
                     <div className="tab-bar radius">
-                        <a className="tab" href="#" data-text="Players needed">
-                            <span className="icon">👩‍👩‍👧</span>
+                        <a className="tab"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                getGames("players")
+                            }}
+                            href="#" data-text="Players needed">
+                            <span className="icon" >👩‍👩‍👧</span>
                         </a>
-                        <a className="tab" href="#" data-text="Skill level">
+                        <a className="tab"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                getGames("skill")
+                            }}
+                            href="#" data-text="Skill level">
                             <span className="icon">🎯</span>
                         </a>
                     </div>

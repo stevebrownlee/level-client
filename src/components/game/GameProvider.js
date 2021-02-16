@@ -7,8 +7,8 @@ export const GameProvider = (props) => {
     const [ games, setGames ] = useState([])
     const [ gameTypes, setTypes ] = useState([])
 
-    const getGames = () => {
-        return fetch(`${Settings.apiHost}/games`, {
+    const getGames = (sortBy=null) => {
+        return fetch(`${Settings.apiHost}/games${sortBy === null ? "" : `?sortBy=${sortBy}`}`, {
             headers:{
                 "Authorization": `Token ${localStorage.getItem("lu_token")}`
             }
